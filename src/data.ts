@@ -1,3 +1,8 @@
+// Prefixes public-folder assets with the app base path so they resolve correctly
+// whether hosted at the domain root or under a sub-path (e.g. GitHub Pages).
+// import.meta.env.BASE_URL is '/' in dev and '/Final-Portfolio-/' in production.
+export const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
+
 export const profile = {
   name: 'Krishna Saini',
   firstName: 'Krishna',
@@ -12,7 +17,8 @@ export const profile = {
     "With hands-on experience in technologies like Next.js, React, MongoDB and Firebase, I've developed chat platforms, task managers and collaborative tools that blend performance with user experience. I'm currently exploring advanced concepts like real-time communication, AI integration and scalable cloud architectures.",
     "I'm deeply committed to my craft and always looking for opportunities to grow, contribute and build something valuable.",
   ],
-  resume: '/resume.pdf',
+  resume: asset('resume.pdf'),
+  avatar: asset('images/profile2.jpg'),
   email: 'krishnasaini27169@gmail.com',
   whatsapp: 'https://wa.me/9675017530',
 }
@@ -159,7 +165,7 @@ export const projects: Project[] = [
       'NotesMania started from a very real pain point: academic material scattered across dozens of unorganized WhatsApp groups, impossible to search and easy to lose.',
       'It gives students one structured hub to upload, categorize and discover notes, assignments and resources — now enhanced with AI-powered insights that summarize and surface the right material fast.',
     ],
-    image: '/images/notesmania.png',
+    image: asset('images/notesmania.png'),
     url: 'https://notes-mania-frontend.vercel.app/',
     repoUrl: 'https://github.com/Krsna-Saini',
     tags: ['Next.js', 'MongoDB', 'Tailwind'],
@@ -183,7 +189,7 @@ export const projects: Project[] = [
       'Nexus is a team productivity workspace that turns scattered to-dos and deadlines into a single, calm board.',
       'It focuses on flow: fast task capture, clear stages (To Do → In Progress → Review → Done) and a layout that stays readable even when a project gets busy.',
     ],
-    image: '/images/nexus.png',
+    image: asset('images/nexus.png'),
     url: 'https://nexus-two-snowy.vercel.app/',
     repoUrl: 'https://github.com/Krsna-Saini',
     tags: ['React', 'Node.js', 'Express'],
@@ -207,7 +213,7 @@ export const projects: Project[] = [
       'A real-time chat platform that blends human conversation with an AI assistant that actually remembers context.',
       'Beyond text, it supports group chats, audio messages and attachments — with context-aware follow-ups so the assistant stays useful across a whole thread.',
     ],
-    image: '/images/chatassistant.png',
+    image: asset('images/chatassistant.png'),
     url: 'https://chatgpt-gray-xi.vercel.app/',
     repoUrl: 'https://github.com/Krsna-Saini',
     tags: ['AI', 'Socket.IO', 'React'],
@@ -231,7 +237,7 @@ export const projects: Project[] = [
       'Better Call Saul connects people who need legal help with advocates who can provide it — end to end.',
       'Clients browse expertise and book appointments; advocates get a profile to showcase their practice. Powered by a GraphQL API over MongoDB for precise, efficient data fetching.',
     ],
-    image: '/images/bettercallsaul.png',
+    image: asset('images/bettercallsaul.png'),
     url: 'https://better-call-saul-frontend.vercel.app/',
     repoUrl: 'https://github.com/Krsna-Saini',
     tags: ['Full-Stack', 'GraphQL', 'MongoDB'],

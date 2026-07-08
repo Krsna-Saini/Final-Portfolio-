@@ -69,7 +69,7 @@ export default function About() {
                 <span className="absolute -right-10 -top-10 h-32 w-32 animate-spin-slow rounded-full border border-dashed border-violet-glow/30" />
                 <div className="relative overflow-hidden rounded-2xl">
                   <img
-                    src="/images/profile2.jpg"
+                    src={profile.avatar}
                     alt={profile.name}
                     className="aspect-[4/5] w-full object-cover"
                     loading="lazy"

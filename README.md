@@ -138,14 +138,47 @@ public/
 
 ## Deployment
 
-- **Frontend** deploys anywhere static (Vercel, Netlify, GitHub Pages). Run `npm run build`
-  and serve `dist/`.
-- **Backend** is a long-running Express server, so it does **not** run on Vercel's static
-  hosting as-is. Host `server/` on a Node platform such as **Render**, **Railway**, **Fly.io**
-  or a small VM, then point the frontend's `/api` calls at that URL (update the Vite proxy for
-  dev, and use an env-based base URL / rewrite in production). Alternatively, port the endpoints
-  in `server/index.js` to serverless functions (e.g. Vercel/Netlify Functions) backed by a
-  hosted database instead of the local JSON file.
+### GitHub Pages (automated)
+
+This repo is wired to publish to **GitHub Pages** automatically. Every push to `main` runs
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which builds the app and
+deploys `dist/` to Pages.
+
+**One-time setup:** in the repo, go to **Settings → Pages → Build and deployment → Source**
+and choose **GitHub Actions**. After the next push (or a manual run from the **Actions** tab),
+the site goes live at:
+
+```
+https://krsna-saini.github.io/Final-Portfolio-/
+```
+
+How it's made Pages-friendly:
+
+- `vite.config.ts` sets `base: '/Final-Portfolio-/'` for production builds (repo sub-path),
+  and keeps `/` for local dev.
+- `src/main.tsx` sets the React Router `basename` from `import.meta.env.BASE_URL`.
+- Public assets (images, resume) are referenced through the `asset()` helper in `src/data.ts`
+  so they resolve under the sub-path.
+- `scripts/gh-pages-404.mjs` (run automatically via the `postbuild` npm hook) copies
+  `index.html` to `404.html` so client-side deep links (`/inbox`, `/projects/...`) work on refresh.
+
+> **Renaming the repo?** Update the `base` in `vite.config.ts` to match the new repo name
+> (keep the leading and trailing slashes), then push again.
+
+> **Note:** GitHub Pages is **static only**, so the Express backend/inbox does not run there.
+> The Contact form automatically falls back to `mailto:` when the API is unreachable, so it
+> still works — but received messages won't appear in `/inbox` unless you also host the backend
+> (see below) and point the frontend at it.
+
+### Other options
+
+- **Frontend** also deploys anywhere static (Vercel, Netlify). Run `npm run build` and serve `dist/`.
+- **Backend** is a long-running Express server, so it does **not** run on static hosting as-is.
+  Host `server/` on a Node platform such as **Render**, **Railway**, **Fly.io** or a small VM,
+  then point the frontend's `/api` calls at that URL (update the Vite proxy for dev, and use an
+  env-based base URL / rewrite in production). Alternatively, port the endpoints in
+  `server/index.js` to serverless functions (e.g. Vercel/Netlify Functions) backed by a hosted
+  database instead of the local JSON file.
 
 ---
 

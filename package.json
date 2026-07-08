@@ -8,6 +8,7 @@
     "dev:web": "vite",
     "dev:server": "node server/index.js",
     "build": "tsc -b && vite build",
+    "postbuild": "node scripts/gh-pages-404.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },
